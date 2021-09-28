@@ -22,8 +22,6 @@ class TF_IDF(object):
         count = 0
 
         for line in reader:
-            if count > 100:
-                break
             if count == 0:
                 print("Columns: " + line[0] + ", " + line[1])
             else:
