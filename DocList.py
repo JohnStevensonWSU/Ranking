@@ -68,6 +68,7 @@ class docList(object):
         # If the docID does not exist, return 1
         return 0
 
+    # Counts the number of documents in a DocList.
     def count(self):
         node = self.head
         count = 0
@@ -78,6 +79,7 @@ class docList(object):
 
         return count
 
+    # Returns the documents in a DocList.
     def getDocs(self):
         node = self.head
         docs = []

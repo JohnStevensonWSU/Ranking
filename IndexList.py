@@ -88,7 +88,8 @@ class indexList(object):
             return None
 
         return indexNode
-
+    
+    # Returns the frequency of a term in a document.
     def termFreq(self, term, docID):
         node = self.search(self.head, term)
         
@@ -101,6 +102,8 @@ class indexList(object):
         
         return node.docList.getFreq(docID)
 
+    # Returns the number of documents that contain
+    # a given term.
     def getDocNumber(self, term):
         node = self.search(self.head, term)
         
@@ -109,10 +112,11 @@ class indexList(object):
         elif node == -1:
             return 0
         elif node.term != term:
-            return 1
+            return 0
 
         return node.docList.count()
     
+    # Returns the documents that contain a given term.
     def getDocs(self, term):
         node = self.search(self.head, term)
 
