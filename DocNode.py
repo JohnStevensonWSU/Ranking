@@ -15,3 +15,6 @@ class docNode(object):
     # frequency.
     def incrFreq(self):
         self.freq += 1
+
+    def print(self):
+        print("(" + str(self.docID) + "," + str(self.freq) + ")")

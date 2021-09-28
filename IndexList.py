@@ -42,43 +42,87 @@ class indexList(object):
     # whose term is just before the given term
     # alphabetically.
     def search(self, indexNode, term):
-        # Return None if the indexList is empty.
-        if indexNode is None:
-            return indexNode
+        # Create a node pointer.
+        node = indexNode
 
-        # Return -1 if the head needs to be replaced.
-        if indexNode.term > term:
-            return -1
+        # Return None if the list is empty.
+        if node is None:
+            return node
 
-        # Return current indexNode if the next
-        # node is None.
-        if indexNode.nextIndexNode is None:
-            return indexNode
+        # While there is node after the current node,
+        while node.nextIndexNode is not None:
+            # Return current node if it has the search term.
+            if node.term == term:
+                return node
+            # Return current node if the next node's term comes 
+            # after the search term in the alphabet.
+            elif node.nextIndexNode.term > term:
+                return node
+            node= node.nextIndexNode
 
-        # Return the indexNode if it's term is 
-        # the given term.
-        if indexNode.term == term:
-            return indexNode
+        return node
 
-        # Return the indexNode if the next term
-        # is after the given term alphabetically.
-        if indexNode.nextIndexNode.term > term:
-            return indexNode
-
-        # Search with the next indexNode and return 
-        # its output.
-        return self.search(indexNode.nextIndexNode, term)
-
+    # Prints the index list who calls the method
     def print(self):
         indexNode = self.head
         count = 0
-
         while indexNode is not None:
             count += 1
-            print(count)
             print(indexNode.term)
             docNode = indexNode.docList.head
             while docNode is not None:
                 print("(" + str(docNode.docID) + "," + str(docNode.freq) + ")")
                 docNode = docNode.nextDocNode
             indexNode = indexNode.nextIndexNode
+
+    # Returns the DocList associated with a term.
+    # If no term exists in the index, returns None.
+    def getIndexNode(self, term):
+        indexNode = self.search(self.head, term)
+
+        if indexNode is None:
+            return None
+        elif indexNode == -1:
+            return None
+        elif indexNode.term != term:
+            return None
+
+        return indexNode
+
+    def termFreq(self, term, docID):
+        node = self.search(self.head, term)
+        
+        if node is None:
+            return 0
+        elif node == -1:
+            return 0
+        elif node.term != term:
+           return 0
+        
+        return node.docList.getFreq(docID)
+
+    def getDocNumber(self, term):
+        node = self.search(self.head, term)
+        
+        if node is None:
+            return 0
+        elif node == -1:
+            return 0
+        elif node.term != term:
+            return 1
+
+        return node.docList.count()
+    
+    def getDocs(self, term):
+        node = self.search(self.head, term)
+
+        if node is None:
+            return None
+        elif node == -1:
+            return None
+        elif node.term != term:
+            return None
+
+        return node.docList.getDocs()
+
+
