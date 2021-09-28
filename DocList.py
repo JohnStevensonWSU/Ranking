@@ -30,22 +30,60 @@ class docList(object):
         return         
 
     # Search for a docNode with the given docID
-    def search(self, node, docID):
+    def search(self, docNode, docID):
+        node = docNode
+
         # Return node if docList is empty.
         if node is None:
             return node
 
-        # Return node if it is the node that 
-        # corresponds with the given docID.
-        if node.docID == docID:
-            return node
+        # While another node exists beyond the current one,
+        while node.nextDocNode is not None:
+            # Return the current node if it matches the docID
+            if node.docID == docID:
+                return node
+            node = node.nextDocNode
 
-        # Return current docNode if you've
-        # reached the last node.
-        if node.nextDocNode is None:
-            return node
+        return node
 
-        return self.search(node.nextDocNode, docID)
+    # Prints the Doc List that calls the method.
+    def print(self):
+        node = self.head
 
-        
+        while node is not None:
+            node.print()
+            node = node.nextDocNode
 
+        return
+
+    # Returns the frequency of a term in a document.
+    def getFreq(self, docID):
+        node = self.head
+
+        while node is not None:
+            if node.docID == docID:
+                return node.freq
+            node = node.nextDocNode
+
+        # If the docID does not exist, return 1
+        return 0
+
+    def count(self):
+        node = self.head
+        count = 0
+
+        while node is not None:
+            count+= 1
+            node = node.nextDocNode
+
+        return count
+
+    def getDocs(self):
+        node = self.head
+        docs = []
+
+        while node is not None:
+            docs.append(node.docID)
+            node = node.nextDocNode
+
+        return docs

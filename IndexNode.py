@@ -15,3 +15,7 @@ class indexNode(object):
     def add(self, term, docID):
         self.docList.add(docID)
         
+    # Prints the Index Node that calls the method.
+    def print(self):
+        print(self.term)
+        self.docList.print()
